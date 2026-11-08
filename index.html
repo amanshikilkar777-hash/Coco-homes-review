@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#173f32">
+<title>Share your Coco Homes experience</title>
+<style>
+:root{--green:#173f32;--green2:#245744;--gold:#c79b4b;--cream:#f7f4ec;--ink:#24332d;--muted:#737c75;--line:#e7e2d7}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:620px;margin:0 auto;padding:26px 18px 44px}
+.brand{text-align:center;padding:16px 10px 24px}.brandname{font-family:Georgia,serif;font-size:28px;letter-spacing:3px;color:var(--green);font-weight:600}.sub{font-size:10px;letter-spacing:3px;color:#8a795d;margin-top:6px}
+.rule{height:1px;background:var(--line);margin:0 auto 25px;max-width:420px}
+h1{font-family:Georgia,serif;font-weight:500;font-size:34px;line-height:1.12;text-align:center;margin:0 0 10px;color:var(--green)}
+.lead{text-align:center;color:var(--muted);font-size:14px;line-height:1.6;margin:0 auto 24px;max-width:390px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;margin:14px 0;box-shadow:0 8px 26px #273b2e0a}
+.label{font-size:13px;font-weight:650;margin-bottom:12px;display:block}
+.stars{display:flex;justify-content:center;gap:7px;margin:8px 0 10px}
+.star{border:0;background:#f5f2eb;color:#c8c1b2;border-radius:12px;width:52px;height:52px;font-size:31px;cursor:pointer}
+.star.active{color:var(--gold);background:#fbf5e8}.ratinghint{text-align:center;color:var(--muted);font-size:13px;min-height:20px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{border:1px solid var(--line);border-radius:999px;padding:9px 12px;background:#fff;color:#526057;font-size:13px;cursor:pointer}
+.chip.selected{border-color:var(--green2);background:#edf4ef;color:var(--green);font-weight:650}
+textarea{width:100%;min-height:145px;resize:vertical;border:1px solid var(--line);border-radius:12px;padding:13px;font:14px/1.6 inherit;color:var(--ink);outline-color:var(--green2)}
+.note{font-size:12px;color:var(--muted);line-height:1.55;margin:10px 0 0}
+button.primary{width:100%;border:0;border-radius:12px;background:var(--green);color:white;padding:15px 18px;font-weight:650;font-size:15px;cursor:pointer}
+button.secondary{width:100%;border:1px solid var(--green);border-radius:12px;background:white;color:var(--green);padding:13px 18px;font-weight:650;font-size:14px;cursor:pointer;margin-top:9px}
+button:focus-visible,.chip:focus-visible,.star:focus-visible{outline:3px solid #d5b16f;outline-offset:2px}
+.status{text-align:center;font-size:12px;color:var(--green);min-height:18px;margin-top:8px}
+.footer{text-align:center;font-size:11px;color:#8a918b;line-height:1.6;margin-top:22px}
+.hidden{display:none!important}
+@media(max-width:390px){h1{font-size:30px}.star{width:47px;height:49px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="brand">
+    <div class="brandname">COCO HOMES</div>
+    <div class="sub">BY KINSHIP HOSPITALITY</div>
+  </header>
+  <div class="rule"></div>
+  <h1>How was your stay?</h1>
+  <p class="lead">Your honest feedback helps us make every stay more welcoming. Share what stood out to you.</p>
+
+  <section class="card" aria-labelledby="rating-label">
+    <span class="label" id="rating-label">1. Choose a star rating that reflects your stay</span>
+    <div class="stars" role="group" aria-label="Rate your stay from one to five stars">
+      <button class="star" data-rating="1" aria-label="1 star">★</button>
+      <button class="star" data-rating="2" aria-label="2 stars">★</button>
+      <button class="star" data-rating="3" aria-label="3 stars">★</button>
+      <button class="star" data-rating="4" aria-label="4 stars">★</button>
+      <button class="star" data-rating="5" aria-label="5 stars">★</button>
+    </div>
+    <div class="ratinghint" id="ratingHint">Tap the stars to begin</div>
+  </section>
+
+  <section class="card hidden" id="details">
+    <span class="label">2. What best describes your experience?</span>
+    <div class="chips" id="topics">
+      <button class="chip">Room cleanliness</button>
+      <button class="chip">Comfort of the room</button>
+      <button class="chip">Staff hospitality</button>
+      <button class="chip">Location</button>
+      <button class="chip">Peaceful atmosphere</button>
+      <button class="chip">Value for money</button>
+      <button class="chip">Check-in experience</button>
+      <button class="chip">Amenities</button>
+    </div>
+    <p class="note">Select only the things that genuinely match your stay. You can also write your own details below.</p>
+  </section>
+
+  <section class="card hidden" id="draftCard">
+    <label class="label" for="review">3. Your review draft</label>
+    <textarea id="review" placeholder="Add a few words about your stay. Your selected topics can help you get started."></textarea>
+    <p class="note">This is a writing aid, not a guest review or a claim about your stay. Please edit it so it accurately reflects your own experience before posting.</p>
+    <button class="secondary" id="copyBtn">Copy my review</button>
+    <div class="status" id="copyStatus" aria-live="polite"></div>
+  </section>
+
+  <section class="card hidden" id="googleCard">
+    <span class="label">4. Share your feedback on Google (optional)</span>
+    <p class="note" style="margin:0 0 14px">When you're ready, open Coco Homes' Google review page. You can paste your edited review there, change it, or write a different review.</p>
+    <button class="primary" id="googleBtn">Continue to Google Reviews ↗</button>
+  </section>
+
+  <footer class="footer">Thank you for choosing Coco Homes.<br>Your feedback is valued, whatever your rating.</footer>
+</main>
+<script>
+const reviewUrl = "https://g.page/r/Ca6U1aNnsvYJEAE/review";
+let rating = 0;
+const labels = {1:"Not a good stay",2:"Could have been better",3:"An okay stay",4:"A good stay",5:"An excellent stay"};
+const stars = [...document.querySelectorAll(".star")];
+const hint = document.getElementById("ratingHint");
+const details = document.getElementById("details");
+const draftCard = document.getElementById("draftCard");
+const googleCard = document.getElementById("googleCard");
+const review = document.getElementById("review");
+const selected = new Set();
+
+stars.forEach(btn => btn.addEventListener("click", () => {
+  rating = Number(btn.dataset.rating);
+  stars.forEach(s => s.classList.toggle("active", Number(s.dataset.rating) <= rating));
+  hint.textContent = `${rating} / 5 — ${labels[rating]}`;
+  details.classList.remove("hidden");
+  draftCard.classList.remove("hidden");
+  googleCard.classList.remove("hidden");
+}));
+
+document.querySelectorAll(".chip").forEach(chip => chip.addEventListener("click", () => {
+  const topic = chip.textContent;
+  if(selected.has(topic)){selected.delete(topic);chip.classList.remove("selected")}
+  else{selected.add(topic);chip.classList.add("selected")}
+  updateDraft();
+}));
+
+function updateDraft(){
+  if(!rating) return;
+  const topics = [...selected];
+  if(!review.value.trim() || review.dataset.autogenerated === "true"){
+    const opening = rating >= 4 ? "I had a " + (rating===5 ? "wonderful" : "good") + " stay at Coco Homes." :
+      rating===3 ? "My stay at Coco Homes was okay overall." :
+      "My stay at Coco Homes did not fully meet my expectations.";
+    const middle = topics.length ? " I particularly want to mention " + topics.join(", ").toLowerCase() + "." : "";
+    review.value = opening + middle + " " + (rating >= 4 ? "Thank you to the team." : "I hope this feedback is helpful.");
+    review.dataset.autogenerated = "true";
+  }
+}
+review.addEventListener("input",()=>{review.dataset.autogenerated="false"});
+document.getElementById("copyBtn").addEventListener("click", async()=>{
+  try{await navigator.clipboard.writeText(review.value);document.getElementById("copyStatus").textContent="Review copied. You can paste and edit it on Google."}
+  catch(e){review.select();document.getElementById("copyStatus").textContent="Select and copy the text above."}
+});
+document.getElementById("googleBtn").addEventListener("click",()=>window.open(reviewUrl,"_blank","noopener,noreferrer"));
+</script>
+</body>
+</html>
